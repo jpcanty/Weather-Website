@@ -1,16 +1,30 @@
 import React, { useState } from 'react';
-const api = {
+const weather_map_api = {
   key: "69f5622ea693e1adfea3c6407207bb9f",
   base: "https://api.openweathermap.org/data/2.5/"
 }
+
+const thingspeak_api = {
+  key: "6OKMFXMALH1QI7J4",
+  base: "https://api.thingspeak.com/channels/1411578/feeds.json"
+}
+
 
 function App() {
   const [query, setQuery] = useState('');
   const [weather, setWeather] = useState({});
 
+  console.log(query);
+
+  if (query === "Chicago") {
+    fetch(`${thingspeak_api.base}?api_key=${thingspeak_api.key}&results=5`)
+    .then(res => res.json())
+    .then(result => console.log(result))
+  }
+
   const search = evt => {
     if (evt.key === "Enter") {
-      fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
+      fetch(`${weather_map_api.base}weather?q=${query}&units=metric&APPID=${weather_map_api.key}`)
         .then(res => res.json())
         .then(result => {
           setWeather(result);
