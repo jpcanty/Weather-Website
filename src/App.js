@@ -59,6 +59,9 @@ function App() {
             onKeyPress={search}
           />
         </div>
+        <div>
+          <iframe width="450" height="260" src="https://thingspeak.com/channels/250296/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=50&type=line&update=15"></iframe>
+        </div>
         {(typeof weather.main != "undefined") ? (
         <div>
           <div className="location-box">
