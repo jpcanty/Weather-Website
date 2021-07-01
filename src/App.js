@@ -24,7 +24,7 @@ function App() {
 
   const search = evt => {
     if (evt.key === "Enter") {
-      fetch(`${weather_map_api.base}weather?q=${query}&units=metric&APPID=${weather_map_api.key}`)
+      fetch(`${weather_map_api.base}weather?q=${query}&APPID=${weather_map_api.key}&units=imperial`)
         .then(res => res.json())
         .then(result => {
           setWeather(result);
@@ -70,7 +70,7 @@ function App() {
           </div>
           <div className="weather-box">
             <div className="temp">
-              {Math.round(weather.main.temp)}°c
+              {Math.round(weather.main.temp)}°F
             </div>
             <div className="weather">{weather.weather[0].main}</div>
           </div>
