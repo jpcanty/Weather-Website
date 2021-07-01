@@ -24,7 +24,7 @@ function App() {
 
   const search = evt => {
     if (evt.key === "Enter") {
-      fetch(`${weather_map_api.base}weather?q=${query}&units=metric&APPID=${weather_map_api.key}`)
+      fetch(`${weather_map_api.base}weather?q=${query}&units=imperial&APPID=${weather_map_api.key}`)
         .then(res => res.json())
         .then(result => {
           setWeather(result);
@@ -69,7 +69,7 @@ function App() {
             </div>
             <div className="weather-box">
               <div className="temp">
-                {Math.round(weather.main.temp)}°c
+                {Math.round(weather.main.temp)}°F
            </div>
               <div className="weather">{weather.weather[0].main}</div>
             </div>
@@ -87,6 +87,8 @@ function App() {
           <iframe width="450" height="260" src="https://thingspeak.com/channels/1411578/charts/3?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=Wind+Speed&type=line"></iframe>
           <h2>Storm Proximity Recordings</h2>
           <iframe width="450" height="260" src="https://thingspeak.com/channels/1411578/charts/4?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=Storm+Proximity&type=line"></iframe>
+          <h2>Storm Intensity Recordings</h2>
+          <iframe width="450" height="260" src="https://thingspeak.com/channels/1411578/charts/5?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=line&update=15"></iframe>
         </div>
       </main>
     </div>
