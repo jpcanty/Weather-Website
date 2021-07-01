@@ -18,13 +18,13 @@ function App() {
 
   if (query === "Chicago") {
     fetch(`${thingspeak_api.base}?api_key=${thingspeak_api.key}&results=5`)
-    .then(res => res.json())
-    .then(result => console.log(result))
+      .then(res => res.json())
+      .then(result => console.log(result))
   }
 
   const search = evt => {
     if (evt.key === "Enter") {
-      fetch(`${weather_map_api.base}weather?q=${query}&APPID=${weather_map_api.key}&units=imperial`)
+      fetch(`${weather_map_api.base}weather?q=${query}&units=metric&APPID=${weather_map_api.key}`)
         .then(res => res.json())
         .then(result => {
           setWeather(result);
@@ -50,7 +50,7 @@ function App() {
     <div className={(typeof weather.main != "undefined") ? ((weather.main.temp > 16) ? 'app warm' : 'app') : 'app'}>
       <main>
         <div className="search-box">
-          <input 
+          <input
             type="text"
             className="search-bar"
             placeholder="Search..."
@@ -59,28 +59,37 @@ function App() {
             onKeyPress={search}
           />
         </div>
-        <div>
-          <iframe width="450" height="260" src="https://thingspeak.com/channels/250296/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=50&type=line&update=15"></iframe>
-        </div>
+
         {(typeof weather.main != "undefined") ? (
-        <div>
-          <div className="location-box">
-            <div className="location">{weather.name}, {weather.sys.country}</div>
-            <div className="date">{dateBuilder(new Date())}</div>
-          </div>
-          <div className="weather-box">
-            <div className="temp">
-              {Math.round(weather.main.temp)}°F
+          <div>
+            <h1>Live Updates from OpenWeatherMap.com</h1>
+            <div className="location-box">
+              <div className="location">{weather.name}, {weather.sys.country}</div>
+              <div className="date">{dateBuilder(new Date())}</div>
             </div>
-            <div className="weather">{weather.weather[0].main}</div>
+            <div className="weather-box">
+              <div className="temp">
+                {Math.round(weather.main.temp)}°c
+           </div>
+              <div className="weather">{weather.weather[0].main}</div>
+            </div>
           </div>
-        </div>
         ) : ('')}
+        <div>
+          <h1> Recordings from our local station {""}</h1>
+          <hr />
+          <hr />
+          <h2>Temperature Recordings</h2>
+          <iframe width="450" height="260" src="https://thingspeak.com/channels/1411578/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=Temperature&type=line"></iframe>
+          <h2>Humidity Recordings</h2>
+          <iframe width="450" height="260" src="https://thingspeak.com/channels/1411578/charts/2?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=Humidity&type=line"></iframe>
+          <h2>Wind Speed Recordings</h2>
+          <iframe width="450" height="260" src="https://thingspeak.com/channels/1411578/charts/3?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=Wind+Speed&type=line"></iframe>
+          <h2>Storm Proximity Recordings</h2>
+          <iframe width="450" height="260" src="https://thingspeak.com/channels/1411578/charts/4?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=Storm+Proximity&type=line"></iframe>
+        </div>
       </main>
     </div>
   );
-}
-
-
-
+};
 export default App;
